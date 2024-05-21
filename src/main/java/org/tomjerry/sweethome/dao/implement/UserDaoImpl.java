@@ -1,25 +1,31 @@
-package org.tomjerry.sweethome.dao.userImpl;
+package org.tomjerry.sweethome.dao.implement;
 
 import org.tomjerry.sweethome.dao.UserDao;
+import org.tomjerry.sweethome.pojo.entity.UserEntity;
 
 public class UserDaoImpl implements UserDao {
+    @Override
     public UserEntity getUserById(int id) {
-        // implementation
+        return null;
     }
 
+    @Override
     public UserEntity getUserByName(String name) {
-        // implementation
+        return null;
     }
 
+    @Override
     public void addUser(UserEntity user) {
-        // implementation
+
     }
 
+    @Override
     public void updateUser(UserEntity user) {
-        // implementation
+
     }
 
+    @Override
     public void deleteUser(int id) {
-        // implementation
+
     }
 }

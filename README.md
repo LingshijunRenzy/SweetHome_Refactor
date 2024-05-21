@@ -63,9 +63,11 @@ src
 │   │       └── tomjerry
 │   │           ├── controller # 控制器
 │   │           ├── dao # 数据访问层
-│   │           ├── entity # 实体类
+│   │           ├── pojo # 实体类
+│   │           │    └── entity # 数据库实体类
 │   │           ├── service # 服务层
 │   │           ├── exception # 异常处理
+│   │           ├── repository # 数据访问层接口
 │   │           └── SweethomeApplication.java # 项目启动类
 │   └── resources
 │       ├── application.properties # 项目配置文件

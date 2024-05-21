@@ -1,4 +1,4 @@
-package org.tomjerry.sweethome.entity;
+package org.tomjerry.sweethome.pojo.entity;
 
 
 import jakarta.persistence.*;
