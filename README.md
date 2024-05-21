@@ -13,6 +13,7 @@
     - [项目主要结构](#项目主要结构)
     - [添加新功能](#添加新功能)
 - [运行测试](#运行测试)
+    - [使用IDEA自带的http客户端测试API接口](#使用IDEA自带的http客户端测试API接口)
     - [使用test包中的测试类来测试代码](#使用test包中的测试类来测试代码)
     - [使用Postman来测试API接口](#使用Postman来测试API接口)
 - [上传更改](#上传更改)
@@ -62,17 +63,20 @@ src
 │   │   └── com
 │   │       └── tomjerry
 │   │           ├── controller # 控制器
-│   │           ├── dao # 数据访问层
-│   │           ├── pojo # 实体类
-│   │           │    └── entity # 数据库实体类
+│   │           ├── dao # 数据访问层, 当repository无法满足需求时，可以使用JpaRepository自定义SQL语句
+│   │           ├── pojo # 数据库实体类
+│   │           ├── repository # 数据访问层接口，使用JpaRepository，不需要自己写SQL语句
+│   │           ├── response # 返回结果封装类
 │   │           ├── service # 服务层
-│   │           ├── exception # 异常处理
-│   │           ├── repository # 数据访问层接口
+│   │           ├── util # 工具类
+│   │           ├── exception # 异常类
 │   │           └── SweethomeApplication.java # 项目启动类
 │   └── resources
-│       ├── application.properties # 项目配置文件
-│       └── sql
-│           └── init.sql # 数据库创建脚本
+│       ├── application.properties # 配置文件
+│       ├── sql # 数据库初始化脚本
+│       │    ├── init.sql # 创建数据库和表
+│       │    └── data.sql # 插入测试数据
+│       └── static # 静态资源
 └── test
     └── java
         └── com
@@ -108,14 +112,17 @@ public class User {
     // 省略getter和setter
 }
 ```
-2. 在`dao`包中添加新的数据访问层接口  
+2. 在`repository`包中添加新的数据访问层接口  
+在这里查看JpaRepository的教程: <https://blog.csdn.net/fly910905/article/details/78557110>
 - 示例代码 仅供参考
 ```java
-package com.tomjerry.dao;
+//UserRepository.java
+package com.tomjerry.repository;
 
 import ...
 
-public interface UserDao extends JpaRepository<User, Integer> {
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer> {
     User findByUsername(String username);
     User findByEmail(String email);
 }
@@ -123,11 +130,11 @@ public interface UserDao extends JpaRepository<User, Integer> {
 3. 在`service`包中添加新的服务层接口和实现类  
 - 示例代码
 ```java
+//UserService.java
 package com.tomjerry.service;
 
 import ...
 
-@Service
 public interface UserService {
     User register(User user);
     User login(String username, String password);
@@ -137,6 +144,24 @@ public interface UserService {
     User getUserByEmail(String email);
     List<User> getAllUsers();
     void deleteUser(Integer id);
+}
+```
+```java
+//UserServiceImpl.java
+package com.tomjerry.service.impl;
+
+import ...
+
+@Service
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserRepository userRepository;
+
+    @Override
+    public User register(User user) {
+        // 你的代码
+    }
+    ...
 }
 ```
 
@@ -180,6 +205,11 @@ public class UserException extends RuntimeException {
 ```
 
 ## 运行测试
+### 使用IDEA自带的http客户端测试API接口
+- 在IDEA中，打开“端口”页面，可以看到当前整个项目中的所有API接口
+- 点击接口名，可以看到接口的详细信息
+- 确保项目处在运行状态
+- 在“HTTP客户端”中，可以编辑要提交的请求信息，然后点击“提交请求”按钮，可以测试API接口
 ### 使用test包中的测试类来测试代码
 在`test`包中，有一个测试类`SweethomeApplicationTests.java`
 - 这个类中包含了一些测试方法，可以用来测试项目中的一些功能
