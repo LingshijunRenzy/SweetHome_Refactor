@@ -28,6 +28,17 @@ public class UserEntity {
     private Integer status;
 
     public UserEntity() {
+        this.avatar = "default.jpg";
+        this.signature = "这个人很懒，什么都没有留下";
+        this.create_time = new Timestamp(System.currentTimeMillis());
+        this.update_time = new Timestamp(System.currentTimeMillis());
+        this.article_count = 0;
+        this.comment_count = 0;
+        this.liked_count = 0;
+        this.follow_count = 0;
+        this.fans_count = 0;
+        this.is_admin = 0;
+        this.status = 1;
     }
 
     // Getter and Setter

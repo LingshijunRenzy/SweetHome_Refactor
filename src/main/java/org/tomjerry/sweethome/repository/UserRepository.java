@@ -6,7 +6,8 @@ import org.tomjerry.sweethome.pojo.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {
-    UserEntity findByUserid(Integer userid);
     UserEntity findByUsername(String username);
     UserEntity findByUsernameAndPassword(String username, String password);
+    UserEntity findByEmailAndPassword(String email, String password);
+    UserEntity findByPhoneAndPassword(String phone, String password);
 }

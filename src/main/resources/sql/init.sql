@@ -6,7 +6,7 @@ USE oop_sweethome;
 
 -- 创建名为user的表
 CREATE TABLE IF NOT EXISTS user(
-    id INT PRIMARY KEY AUTO_INCREMENT,  -- 主键自增
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- 主键自增,从1开始
     username VARCHAR(20) NOT NULL,      -- 用户名
     password VARCHAR(20) NOT NULL,      -- 密码
     email VARCHAR(50) NOT NULL,         -- 邮箱

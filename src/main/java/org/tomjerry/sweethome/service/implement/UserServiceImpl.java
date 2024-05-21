@@ -34,4 +34,19 @@ public class UserServiceImpl implements UserService{
         UserEntity userEntity = userRepository.findById(id).orElse(null);
         return userEntity;
     }
+
+    public UserEntity getUserByUsernameAndPassword(String username, String password) {
+        UserEntity userEntity = userRepository.findByUsernameAndPassword(username, password);
+        return userEntity;
+    }
+
+    public UserEntity getUserByEmailAndPassword(String email, String password) {
+        UserEntity userEntity = userRepository.findByEmailAndPassword(email, password);
+        return userEntity;
+    }
+
+    public UserEntity getUserByPhoneAndPassword(String phone, String password) {
+        UserEntity userEntity = userRepository.findByPhoneAndPassword(phone, password);
+        return userEntity;
+    }
 }

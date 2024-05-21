@@ -8,4 +8,7 @@ public interface UserService {
     void updateUser(UserEntity user);
     void deleteUser(int id);
     UserEntity getUserById(int id);
+    UserEntity getUserByUsernameAndPassword(String username, String password);
+    UserEntity getUserByEmailAndPassword(String email, String password);
+    UserEntity getUserByPhoneAndPassword(String phone, String password);
 }
