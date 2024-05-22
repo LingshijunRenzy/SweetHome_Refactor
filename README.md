@@ -25,18 +25,14 @@ git clone https://github.com/LingshijunRenzy/SweetHome_Bakcend
 2. 使用IDEA打开本项目
 3. 数据库设置
     - 确保你的电脑上安装了MySQL数据库
-    - 在项目根目录打开命令行或者使用图形化工具登录MySQL，运行数据库创建脚本
-    ```shell
-    mysql -u root -p < src/main/resources/sql/init.sql
-    ```
-    强烈建议在运行好创建脚本后，检查数据库是否创建成功，以及表是否创建成功
-    也可以在IDEA中找到脚本并右键执行
+    - 用idea连接到数据库
+    - 打开`src/main/resources/sql/init.sql`数据库初始化脚本,执行  
     可以在此处查看如何检查数据库：<https://blog.csdn.net/Micaelyu/article/details/104852064>
     - 修改数据库连接配置
     打开`src/main/resources/application.properties`文件，修改数据库连接配置
     ```properties
     # 修改为你的数据库连接地址,如果你的端口号不是3306，请修改
-    spring.datasource.url=jdbc:mysql://localhost:3306/sweethome?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8 
+    spring.datasource.url=jdbc:mysql://localhost:3306/oop_sweethome
     # 修改为你的数据库用户名 
     spring.datasource.username=root
     # 修改为你的数据库密码
