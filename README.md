@@ -29,7 +29,8 @@ git clone https://github.com/LingshijunRenzy/SweetHome_Bakcend
     ```shell
     mysql -u root -p < src/main/resources/sql/init.sql
     ```
-    强烈建议在运行好创建脚本后，检查数据库是否创建成功，以及表是否创建成功  
+    强烈建议在运行好创建脚本后，检查数据库是否创建成功，以及表是否创建成功
+    也可以在IDEA中找到脚本并右键执行
     可以在此处查看如何检查数据库：<https://blog.csdn.net/Micaelyu/article/details/104852064>
     - 修改数据库连接配置
     打开`src/main/resources/application.properties`文件，修改数据库连接配置
@@ -41,9 +42,9 @@ git clone https://github.com/LingshijunRenzy/SweetHome_Bakcend
     # 修改为你的数据库密码
     spring.datasource.password=123456
     ```
-4. 运行项目  
+5. 运行项目  
     - 确保运行项目前，已经启动了mysql服务
-    - 在IDEA中运行项目，运行`src/main/java/com/renzy/sweethome/SweethomeApplication.java`文件
+    - 在IDEA中运行项目，运行`src/main/java/com/tomjerry/sweethome/SweethomeApplication.java`文件
     - 如果一切正常，你将看到如下输出
     ```shell
     2021-06-20 16:00:00.000  INFO 12345 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
