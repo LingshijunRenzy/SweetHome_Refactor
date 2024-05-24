@@ -46,3 +46,31 @@ CREATE TABLE IF NOT EXISTS article_media(
     media_url VARCHAR(255) NOT NULL,      -- 媒体url
     create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP    -- 创建时间
 );
+
+-- 创建名为comments的表
+CREATE TABLE IF NOT EXISTS comments(
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- 主键自增
+    content TEXT NOT NULL,      -- 内容
+    user_id INT NOT NULL,      -- 评论用户id
+    article_id INT NOT NULL,      -- 文章id
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,       -- 创建时间
+    like_count INT NOT NULL DEFAULT 0,    -- 点赞数量
+    status INT NOT NULL DEFAULT 1    -- 状态
+);
+
+-- 创建名为likes的表
+CREATE TABLE IF NOT EXISTS likes(
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- 主键自增
+    user_id INT NOT NULL,      -- 点赞用户id
+    content_type INT NOT NULL,      -- 点赞内容类型（1-文章，2-评论）
+    content_id INT NOT NULL,      -- 点赞内容id
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP    -- 创建时间
+);
+
+-- 创建名为follows的表
+CREATE TABLE IF NOT EXISTS follows(
+    id INT PRIMARY KEY AUTO_INCREMENT,  -- 主键自增
+    user_id INT NOT NULL,      -- 关注用户id
+    follow_user_id INT NOT NULL,      -- 被关注用户id
+    create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP    -- 创建时间
+);
