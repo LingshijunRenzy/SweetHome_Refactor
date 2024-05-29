@@ -6,13 +6,16 @@ import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.repository.UserRepository;
 import org.tomjerry.sweethome.response.LoginResponse;
 import org.tomjerry.sweethome.service.UserService;
+import org.tomjerry.sweethome.util.token.TokenService;
 
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final TokenService tokenService;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, TokenService tokenService) {
         this.userRepository = userRepository;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -62,7 +65,7 @@ public class UserServiceImpl implements UserService{
         LoginResponse loginResponse = new LoginResponse();
         if (user != null) {
             loginResponse.setUser(user);
-            loginResponse.setToken("token");
+            loginResponse.setToken(tokenService.generateToken(user.getId()));
         }
         return loginResponse;
     }
@@ -77,7 +80,7 @@ public class UserServiceImpl implements UserService{
         addUser(user);
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setUser(user);
-        loginResponse.setToken("token");
+        loginResponse.setToken(tokenService.generateToken(user.getId()));
         return loginResponse;
     }
 }

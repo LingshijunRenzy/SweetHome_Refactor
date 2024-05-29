@@ -7,6 +7,7 @@ import org.tomjerry.sweethome.controller.UserController;
 import org.tomjerry.sweethome.response.LoginResponse;
 import org.tomjerry.sweethome.response.Result;
 import org.tomjerry.sweethome.service.UserService;
+import org.tomjerry.sweethome.util.token.TokenService;
 
 @RestController
 public class UserControllerImpl implements UserController{

@@ -9,6 +9,15 @@ public class Result <T>{
     private String message;     // 返回结果的消息
     private T data;             // 返回结果的数据
 
+    public Result() {
+    }
+
+    public Result(Integer code, String message, T data) {
+        this.code = code;
+        this.message = message;
+        this.data = data;
+    }
+
     public Integer getCode() {
         return code;
     }
