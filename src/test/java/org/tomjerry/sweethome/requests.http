@@ -1,0 +1,54 @@
+### user login
+POST http://localhost:8080/user/login
+Content-Type: application/json
+
+{
+    "loginContext": "114514@qq.com",
+    "password": "123123"
+}
+
+### uesr register
+POST http://localhost:8080/user/register
+Content-Type: application/json
+
+{
+    "username": "testUser",
+    "password": "123123",
+    "email": "test@email.com",
+    "phone": "12345678901"
+}
+
+### get user info
+GET http://localhost:8080/user/info
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE4MDIzNDI5fQ.TpHtiUIM8rDGvetBAeqwtbW9reyd2vz9u0Lpcg_3cEHPdbWuWN5f8XRgy0FR190nlkTZUW5ZcHQrjCTTeoI9Kg
+
+
+### update user info
+PATCH http://localhost:8080/user/info
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE4MDIzNDI5fQ.TpHtiUIM8rDGvetBAeqwtbW9reyd2vz9u0Lpcg_3cEHPdbWuWN5f8XRgy0FR190nlkTZUW5ZcHQrjCTTeoI9Kg
+Content-Type: application/json
+
+{
+    "username": "零食",
+    "email": "1919811@qq.com"
+}
+
+### user delete
+DELETE http://localhost:8080/user/info
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI4IiwiZXhwIjoxNzE4MDc0NzU3fQ.a-5A_4PG9p0sKzqmmGcoYQXDzAUwQu79qY0Z04Y-UL4A2T8ZGRws3KUqaZCUIAbfkabZwFnWa3PP6wvf2pFA0Q
+
+
+### add article
+POST http://localhost:8080/article/add
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE3NjU4ODYyfQ.G80sAWcxECvo2V12EnZkiwUqx__nTLCTS6cqS3KKv4X6T7WC3xJ1PVvvx9trLOjIRk7AJJo3bsr-kEkwgCJdFA
+Content-Type: application/json
+
+{
+    "title": "testTitle114514",
+    "content": "testContent1919810"
+}
+
+### test
+POST http://localhost:8080/article/test
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE3NjU4ODYyfQ.G80sAWcxECvo2V12EnZkiwUqx__nTLCTS6cqS3KKv4X6T7WC3xJ1PVvvx9trLOjIRk7AJJo3bsr-kEkwgCJdFA
+Content-Type: application/json

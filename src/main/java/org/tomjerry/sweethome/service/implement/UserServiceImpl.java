@@ -1,12 +1,16 @@
 package org.tomjerry.sweethome.service.implement;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 import org.tomjerry.sweethome.dao.implement.UserDaoImpl;
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.repository.UserRepository;
 import org.tomjerry.sweethome.response.LoginResponse;
 import org.tomjerry.sweethome.service.UserService;
 import org.tomjerry.sweethome.util.token.TokenService;
+
+import java.lang.reflect.Field;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -24,13 +28,37 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateUser(UserEntity user) {
+    public boolean updateUser(UserEntity user) {
         userRepository.save(user);
+        return true;
     }
 
     @Override
-    public void deleteUser(int id) {
+    public boolean updateUser(int id, Map<String, Object> updates) {
+
+        UserEntity user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return false;
+        }
+
+        updates.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(UserEntity.class, key);
+            if (field == null) {
+                return;
+            }
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, user, value);
+
+        });
+
+        userRepository.save(user);
+        return true;
+    }
+
+    @Override
+    public boolean deleteUser(int id) {
         userRepository.deleteById(id);
+        return true;
     }
 
     @Override

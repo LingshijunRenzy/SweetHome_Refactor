@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ArticleService {
     void addArticle(ArticleEntity article);
+    ArticleEntity addArticle(String title, String content, int userId);
     void updateArticle(ArticleEntity article);
     void deleteArticle(int id);
 

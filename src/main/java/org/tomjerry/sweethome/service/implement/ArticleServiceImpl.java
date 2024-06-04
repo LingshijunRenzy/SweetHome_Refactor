@@ -20,6 +20,15 @@ public class ArticleServiceImpl implements ArticleService {
         articleRepository.save(article);
     }
 
+    public ArticleEntity addArticle(String title, String content, int userId) {
+        ArticleEntity article = new ArticleEntity();
+        article.setTitle(title);
+        article.setContent(content);
+        article.setUserid(userId);
+        articleRepository.save(article);
+        return article;
+    }
+
     @Override
     public void updateArticle(ArticleEntity article) {
         articleRepository.save(article);
@@ -32,20 +41,17 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleEntity getArticleById(int id) {
-        ArticleEntity articleEntity = articleRepository.findById(id).orElse(null);
-        return articleEntity;
+        return articleRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<ArticleEntity> getArticlesByTitle(String title) {
-        List<ArticleEntity> articleEntities = articleRepository.findByTitleContaining(title);
-        return articleEntities;
+        return articleRepository.findByTitleContaining(title);
     }
 
     @Override
     public List<ArticleEntity> getArticlesByContent(String content) {
-        List<ArticleEntity> articleEntities = articleRepository.findByContentContaining(content);
-        return articleEntities;
+        return articleRepository.findByContentContaining(content);
     }
 
     @Override
@@ -57,13 +63,11 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleEntity> getArticlesByUserId(int userId) {
-        List<ArticleEntity> articleEntities = articleRepository.findByUserid(userId);
-        return articleEntities;
+        return articleRepository.findByUserid(userId);
     }
 
     @Override
     public List<ArticleEntity> getAllArticles() {
-        List<ArticleEntity> articleEntities = articleRepository.findAll();
-        return articleEntities;
+        return articleRepository.findAll();
     }
 }

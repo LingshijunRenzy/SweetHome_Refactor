@@ -141,6 +141,22 @@ POST http://localhost:8080/register?
 ```
 
 ## 文章相关接口
-### 发布文章
-- 请求方式：`POST`
-- 
+### 根据文章id获取文章
+- 请求方式：`GET`
+- 请求地址：`/article/{id}`
+- 请求参数：无
+- 返回参数：
+  - 'code': 状态码，200表示成功，400表示失败
+  - 'message': 提示信息
+  - 'data': 返回数据
+    - 'article': 文章信息
+      - 'id': 文章ID
+      - 'title': 标题
+      - 'content': 内容
+      - 'user_id': 作者ID
+      - 'create_time': 创建时间
+      - 'update_time': 更新时间
+      - 'status': 状态
+      - 'like_count': 点赞数
+      - 'comment_count': 评论数
+      - 'view_count': 浏览数

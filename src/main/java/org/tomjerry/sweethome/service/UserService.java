@@ -4,10 +4,13 @@ package org.tomjerry.sweethome.service;
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.response.LoginResponse;
 
+import java.util.Map;
+
 public interface UserService {
     void addUser(UserEntity user);
-    void updateUser(UserEntity user);
-    void deleteUser(int id);
+    boolean updateUser(UserEntity user);
+    boolean updateUser(int id, Map<String,Object> updates);
+    boolean deleteUser(int id);
     UserEntity getUserById(int id);
     UserEntity getUserByUsernameAndPassword(String username, String password);
     UserEntity getUserByEmailAndPassword(String email, String password);

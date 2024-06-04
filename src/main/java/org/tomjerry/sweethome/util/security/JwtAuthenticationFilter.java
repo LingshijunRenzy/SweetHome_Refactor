@@ -1,4 +1,4 @@
-package org.tomjerry.sweethome.util;
+package org.tomjerry.sweethome.util.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -24,16 +24,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        //跳过login和register请求的JWT验证
-        if(request.getRequestURI().contains("login") || request.getRequestURI().contains("register")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        String requestURI = request.getRequestURI();
 
         String token = getJwtFromRequest(request);
-
         if(token != null && tokenService.validateToken(token)) {
             Integer userId = tokenService.getUserIdFromToken(token);
+            request.setAttribute("userId", userId);
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         }
 
         filterChain.doFilter(request, response);
