@@ -3,17 +3,13 @@ package org.tomjerry.sweethome.service;
 import org.tomjerry.sweethome.pojo.entity.ArticleEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ArticleService {
-    void addArticle(ArticleEntity article);
     ArticleEntity addArticle(String title, String content, int userId);
-    void updateArticle(ArticleEntity article);
-    void deleteArticle(int id);
+    boolean updateArticle(Integer id, Map<String, Object> updates);
+    boolean deleteArticle(Integer id);
 
     ArticleEntity getArticleById(int id);
-    List<ArticleEntity> getArticlesByTitle(String title);
-    List<ArticleEntity> getArticlesByContent(String content);
-    List<ArticleEntity> getArticlesByKeyword(String keyword);
     List<ArticleEntity> getArticlesByUserId(int userId);
-    List<ArticleEntity> getAllArticles();
 }

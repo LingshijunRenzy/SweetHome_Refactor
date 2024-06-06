@@ -1,4 +1,4 @@
-package org.tomjerry.sweethome.response;
+package org.tomjerry.sweethome.vo.response;
 
 /**
  * 这个类定义了一个通用的返回结果类，用于返回操作结果

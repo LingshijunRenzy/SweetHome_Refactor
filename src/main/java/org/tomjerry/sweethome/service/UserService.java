@@ -2,7 +2,7 @@ package org.tomjerry.sweethome.service;
 
 
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
-import org.tomjerry.sweethome.response.LoginResponse;
+import org.tomjerry.sweethome.vo.response.LoginResponse;
 
 import java.util.Map;
 
