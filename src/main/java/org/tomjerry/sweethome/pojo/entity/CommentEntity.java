@@ -19,7 +19,8 @@ public class CommentEntity {
     @Column(name = "user_id")
     private String user_id;
 
-    private Timestamp create_time;
+    @Column(name = "create_time")
+    private Timestamp createTime;
 
     // Optional fields depending on your requirements
     private Integer like_count; // If you want to track likes on comments
@@ -30,12 +31,12 @@ public class CommentEntity {
     // 无参数的构造函数，供ORM框架使用
     public CommentEntity() {
         // 设置默认值，如果需要的话
-        this.create_time = new Timestamp(System.currentTimeMillis());
+        this.createTime = new Timestamp(System.currentTimeMillis());
         // 可以初始化其他可选字段
     }
 
     public CommentEntity(int id, int article_id, String user_id, String content, Timestamp create_time) {
-        this.create_time = new Timestamp(System.currentTimeMillis());
+        this.createTime = new Timestamp(System.currentTimeMillis());
         // Initialize other optional fields if needed
         // this.like_count = 0;
         // this.reply_count = 0;
@@ -87,11 +88,11 @@ public class CommentEntity {
 
     // Getter and Setter for create_time
     public Timestamp getCreate_time() {
-        return create_time;
+        return createTime;
     }
 
     public void setCreate_time(Timestamp create_time) {
-        this.create_time = create_time;
+        this.createTime = create_time;
     }
 
     // Add getter and setter for optional fields if needed
