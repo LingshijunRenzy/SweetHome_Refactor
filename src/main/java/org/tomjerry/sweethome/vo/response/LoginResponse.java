@@ -1,4 +1,4 @@
-package org.tomjerry.sweethome.response;
+package org.tomjerry.sweethome.vo.response;
 
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
 

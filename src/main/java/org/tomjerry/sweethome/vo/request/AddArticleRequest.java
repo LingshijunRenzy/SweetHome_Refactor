@@ -1,4 +1,4 @@
-package org.tomjerry.sweethome.pojo.request;
+package org.tomjerry.sweethome.vo.request;
 
 public class AddArticleRequest {
     private String title;

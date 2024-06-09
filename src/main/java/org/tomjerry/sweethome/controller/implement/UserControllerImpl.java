@@ -3,10 +3,10 @@ package org.tomjerry.sweethome.controller.implement;
 import org.springframework.web.bind.annotation.*;
 import org.tomjerry.sweethome.controller.UserController;
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
-import org.tomjerry.sweethome.pojo.request.LoginRequest;
-import org.tomjerry.sweethome.pojo.request.RegisterRequest;
-import org.tomjerry.sweethome.response.LoginResponse;
-import org.tomjerry.sweethome.response.Result;
+import org.tomjerry.sweethome.vo.request.LoginRequest;
+import org.tomjerry.sweethome.vo.request.RegisterRequest;
+import org.tomjerry.sweethome.vo.response.LoginResponse;
+import org.tomjerry.sweethome.vo.response.Result;
 import org.tomjerry.sweethome.service.UserService;
 
 import java.util.Map;

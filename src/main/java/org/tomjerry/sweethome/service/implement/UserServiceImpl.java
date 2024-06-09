@@ -2,14 +2,14 @@ package org.tomjerry.sweethome.service.implement;
 
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
-import org.tomjerry.sweethome.dao.implement.UserDaoImpl;
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.repository.UserRepository;
-import org.tomjerry.sweethome.response.LoginResponse;
+import org.tomjerry.sweethome.vo.response.LoginResponse;
 import org.tomjerry.sweethome.service.UserService;
 import org.tomjerry.sweethome.util.token.TokenService;
 
 import java.lang.reflect.Field;
+import java.sql.Timestamp;
 import java.util.Map;
 
 @Service
@@ -51,35 +51,39 @@ public class UserServiceImpl implements UserService{
 
         });
 
+        //设置更新时间
+        user.setUpdate_time(new Timestamp(System.currentTimeMillis()));
+
         userRepository.save(user);
         return true;
     }
 
     @Override
     public boolean deleteUser(int id) {
+
+        if(!userRepository.existsById(id)){
+            return false;
+        }
+
         userRepository.deleteById(id);
         return true;
     }
 
     @Override
     public UserEntity getUserById(int id) {
-        UserEntity userEntity = userRepository.findById(id).orElse(null);
-        return userEntity;
+        return userRepository.findById(id).orElse(null);
     }
 
     public UserEntity getUserByUsernameAndPassword(String username, String password) {
-        UserEntity userEntity = userRepository.findByUsernameAndPassword(username, password);
-        return userEntity;
+        return userRepository.findByUsernameAndPassword(username, password);
     }
 
     public UserEntity getUserByEmailAndPassword(String email, String password) {
-        UserEntity userEntity = userRepository.findByEmailAndPassword(email, password);
-        return userEntity;
+        return userRepository.findByEmailAndPassword(email, password);
     }
 
     public UserEntity getUserByPhoneAndPassword(String phone, String password) {
-        UserEntity userEntity = userRepository.findByPhoneAndPassword(phone, password);
-        return userEntity;
+        return userRepository.findByPhoneAndPassword(phone, password);
     }
 
     @Override

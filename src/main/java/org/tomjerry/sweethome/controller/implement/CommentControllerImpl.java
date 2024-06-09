@@ -1,9 +1,8 @@
 package org.tomjerry.sweethome.controller.implement;
 
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.tomjerry.sweethome.response.Result;
+import org.tomjerry.sweethome.vo.response.Result;
 import org.tomjerry.sweethome.service.CommentService;
 import org.tomjerry.sweethome.pojo.entity.CommentEntity;
 import org.tomjerry.sweethome.controller.CommentController;

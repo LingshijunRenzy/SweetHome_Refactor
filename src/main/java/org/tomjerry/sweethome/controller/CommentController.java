@@ -1,7 +1,7 @@
 package org.tomjerry.sweethome.controller;
 
 import org.tomjerry.sweethome.pojo.entity.CommentEntity;
-import org.tomjerry.sweethome.response.Result;
+import org.tomjerry.sweethome.vo.response.Result;
 
 import java.util.List;
 
