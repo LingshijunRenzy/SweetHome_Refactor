@@ -45,7 +45,7 @@ public class SearchControllerImpl implements SearchController {
             return new SearchResponse<>(200, "success", userPage);
         }
         else{
-            return new SearchResponse<>(400, "invalid search type", null);
+            throw new RuntimeException("Invalid search type");
         }
 
     }

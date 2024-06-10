@@ -4,6 +4,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.tomjerry.sweethome.util.token.TokenService;
 
@@ -30,8 +32,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if(token != null && tokenService.validateToken(token)) {
             Integer userId = tokenService.getUserIdFromToken(token);
             request.setAttribute("userId", userId);
-        } else {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userId, null, null);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
         }
 
         filterChain.doFilter(request, response);

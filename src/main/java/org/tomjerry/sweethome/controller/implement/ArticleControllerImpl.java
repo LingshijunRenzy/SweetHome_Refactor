@@ -1,5 +1,7 @@
 package org.tomjerry.sweethome.controller.implement;
 
+import org.springframework.boot.context.properties.bind.DefaultValue;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import org.tomjerry.sweethome.controller.ArticleController;
 import org.tomjerry.sweethome.pojo.entity.ArticleEntity;
@@ -39,16 +41,14 @@ public class ArticleControllerImpl implements ArticleController {
 
     @Override
     @GetMapping
-    public Result<List<ArticleEntity>> getArticlesByUserId(@RequestParam Integer userId) {
+    public Result<Page<ArticleEntity>> getArticlesByUserId(
+            @RequestParam Integer userId,
+            @RequestParam(defaultValue = "0") Integer page,
+            @RequestParam(defaultValue = "10") Integer size) {
 
-        List<ArticleEntity> articles = articleService.getArticlesByUserId(userId);
+        Page<ArticleEntity> articlePage = articleService.getArticlesByUserId(userId, page, size);
 
-
-        if (articles != null) {
-            return new Result<>(200, "Get articles success", articles);
-        } else {
-            return new Result<>(404, "Articles not found", null);
-        }
+        return new Result<>(200, "Get articles success", articlePage);
     }
 
 

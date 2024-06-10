@@ -19,4 +19,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
             "u.username LIKE %:keyword% " +
             "ORDER BY CASE WHEN u.username LIKE %:keyword% THEN 1 ELSE 2 END")
     Page<UserEntity> searchUser(@Param("keyword") String keyword, Pageable pageable);
+
+    boolean existsByEmail(String email);
+    boolean existsByPhone(String phone);
 }
