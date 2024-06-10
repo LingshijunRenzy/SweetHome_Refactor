@@ -15,8 +15,14 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Integer>
     ArticleEntity findByTitle(String title);
 
     List<ArticleEntity> findByUserid(Integer userId);
+    Page<ArticleEntity> findByUserid(Integer userId, Pageable pageable);
+
+
     List<ArticleEntity> findByTitleContaining(String keyword);
+
+
     List<ArticleEntity> findByContentContaining(String keyword);
+
 
     @Query("SELECT a FROM ArticleEntity a WHERE " +
             "a.title LIKE %:keyword% OR a.content LIKE %:keyword% " +

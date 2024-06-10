@@ -35,11 +35,23 @@ public class SecurityConfig{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session   // 设置session为无状态
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(authorize -> authorize   // 配置请求的权限
-                    //.requestMatchers(HttpMethod.POST,"article/add").authenticated()// 对/article/add请求进行认证
-                    //.requestMatchers(HttpMethod.POST,"/article/test").authenticated()// 对/article/delete请求进行认证
-                    .anyRequest().permitAll());                         // 其他请求放行
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
+        http.authorizeHttpRequests(authorize -> authorize   // 配置请求的权限
+                .requestMatchers("/article/test").authenticated()
+                .requestMatchers(HttpMethod.POST, "/article").authenticated()
+                .requestMatchers(HttpMethod.PATCH, "/article/**").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/article/**").authenticated()
+
+                .requestMatchers(HttpMethod.PATCH, "/user/info").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/user/info").authenticated()
+
+                .requestMatchers(HttpMethod.POST, "/comment/add").authenticated()
+                .requestMatchers(HttpMethod.DELETE, "/comment/**").authenticated()
+
+                .anyRequest().permitAll());                         // 其他请求放行
+
 
         // 添加JWT认证过滤器
         http.addFilterBefore(new JwtAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);

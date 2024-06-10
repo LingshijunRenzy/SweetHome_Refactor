@@ -42,24 +42,25 @@ public class CommentDaoImpl implements CommentDao {
 
     @Override
     public List<CommentEntity> getCommentsByPostId(int postId) throws SQLException {
-        List<CommentEntity> comments = new ArrayList<>();
-        String sql = "SELECT * FROM comments WHERE comments.article_id = ? ORDER BY create_time DESC";
-        try (Connection conn = dataSource.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, postId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    CommentEntity comment = new CommentEntity(
-                            rs.getInt("id"),
-                            rs.getInt("article_id"),
-                            rs.getString("user_id"),
-                            rs.getString("content"),
-                            rs.getTimestamp("create_time")
-                    );
-                    comments.add(comment);
-                }
-            }
-        }
-        return comments;
+//        List<CommentEntity> comments = new ArrayList<>();
+//        String sql = "SELECT * FROM comments WHERE comments.article_id = ? ORDER BY create_time DESC";
+//        try (Connection conn = dataSource.getConnection();
+//             PreparedStatement stmt = conn.prepareStatement(sql)) {
+//            stmt.setInt(1, postId);
+//            try (ResultSet rs = stmt.executeQuery()) {
+//                while (rs.next()) {
+//                    CommentEntity comment = new CommentEntity(
+//                            rs.getInt("id"),
+//                            rs.getInt("article_id"),
+//                            rs.getString("user_id"),
+//                            rs.getString("content"),
+//                            rs.getTimestamp("create_time")
+//                    );
+//                    comments.add(comment);
+//                }
+//            }
+//        }
+//        return comments;
+        return null;
     }
 }

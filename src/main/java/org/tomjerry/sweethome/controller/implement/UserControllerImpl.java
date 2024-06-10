@@ -27,22 +27,11 @@ public class UserControllerImpl implements UserController{
     @PostMapping("/login")
     public Result<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 
-        String loginContext = loginRequest.getLoginContext();
-        String password = loginRequest.getPassword();
+        LoginResponse loginResponse = userService.login(
+                loginRequest.getLoginContext(),
+                loginRequest.getPassword());
 
-        Result<LoginResponse> result = new Result<>();
-        LoginResponse loginResponse = userService.login(loginContext, password);
-
-        if (loginResponse != null) {
-            result.setCode(200);
-            result.setMessage("Login success");
-            result.setData(loginResponse);
-        } else {
-            result.setCode(400);
-            result.setMessage("Login failed");
-        }
-
-        return result;
+        return new Result<>(200, "Login success", loginResponse);
     }
 
 
@@ -50,44 +39,23 @@ public class UserControllerImpl implements UserController{
     @Override
     @PostMapping("/register")
     public Result<LoginResponse> register(@RequestBody RegisterRequest registerRequest) {
-        String username = registerRequest.getUsername();
-        String email = registerRequest.getEmail();
-        String phone = registerRequest.getPhone();
-        String password = registerRequest.getPassword();
+        LoginResponse loginResponse = userService.register(
+                registerRequest.getUsername(),
+                registerRequest.getEmail(),
+                registerRequest.getPhone(),
+                registerRequest.getPassword());
 
-        Result<LoginResponse> result = new Result<>();
-        LoginResponse loginResponse = userService.register(username, email, phone, password);
-
-        if (loginResponse != null) {
-            result.setCode(200);
-            result.setMessage("Register success");
-            result.setData(loginResponse);
-        } else {
-            result.setCode(400);
-            result.setMessage("Register failed");
-        }
-
-        return result;
+        return new Result<>(200, "Register success", loginResponse);
     }
 
 
 
     @Override
-    @GetMapping("/info")
-    public Result<UserEntity> getUserById(@RequestAttribute Integer userId) {
-        Result<UserEntity> result = new Result<>();
-        UserEntity user = userService.getUserById(userId);
+    @GetMapping("/info/{id}")
+    public Result<UserEntity> getUserById(@PathVariable Integer id) {
+        UserEntity user = userService.getUserById(id);
 
-        if (user != null) {
-            result.setCode(200);
-            result.setMessage("Get user success");
-            result.setData(user);
-        } else {
-            result.setCode(404);
-            result.setMessage("User not found");
-        }
-
-        return result;
+        return new Result<>(200, "Get user success", user);
     }
 
 
@@ -95,18 +63,9 @@ public class UserControllerImpl implements UserController{
     @Override
     @DeleteMapping("/info")
     public Result<String> deleteUserById(@RequestAttribute Integer userId) {
-        Result<String> result = new Result<>();
-        boolean success = userService.deleteUser(userId);
+        userService.deleteUser(userId);
 
-        if (success) {
-            result.setCode(200);
-            result.setMessage("Delete user success");
-        } else {
-            result.setCode(400);
-            result.setMessage("Delete user failed");
-        }
-
-        return result;
+        return new Result<>(200, "Delete user success", null);
     }
 
 

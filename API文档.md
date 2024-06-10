@@ -26,7 +26,7 @@
       - 'password': 密码
       - 'email': 邮箱
       - 'phone': 电话
-      - 'create_time': 创建时间
+      - 'createTime': 创建时间
       - 'update_time': 更新时间
       - 'avatar': 头像
       - 'signature': 个性签名
@@ -56,7 +56,7 @@ password=123456
       "password": "123456",
       "email": "123@456.com",
       "phone": "18988112345",
-      "create_time": "2024-05-21T07:00:32.000+00:00",
+      "createTime": "2024-05-21T07:00:32.000+00:00",
       "update_time": "2024-05-21T07:00:32.000+00:00",
       "avatar": "avatar2.jpg",
       "signature": "两颗枣树",
@@ -91,7 +91,7 @@ password=123456
       - 'password': 密码
       - 'email': 邮箱
       - 'phone': 电话
-      - 'create_time': 创建时间
+      - 'createTime': 创建时间
       - 'update_time': 更新时间
       - 'avatar': 头像
       - 'signature': 个性签名
@@ -123,7 +123,7 @@ POST http://localhost:8080/register?
 			"password": "asdasd",
 			"email": "LuoXiang@ShuoXingFa.com",
 			"phone": "13954123232",
-			"create_time": "2024-05-21T07:48:20.155+00:00",
+			"createTime": "2024-05-21T07:48:20.155+00:00",
 			"update_time": "2024-05-21T07:48:20.155+00:00",
 			"avatar": "default.jpg",
 			"signature": "这个人很懒，什么都没有留下",
@@ -154,7 +154,7 @@ POST http://localhost:8080/register?
       - 'title': 标题
       - 'content': 内容
       - 'user_id': 作者ID
-      - 'create_time': 创建时间
+      - 'createTime': 创建时间
       - 'update_time': 更新时间
       - 'status': 状态
       - 'like_count': 点赞数

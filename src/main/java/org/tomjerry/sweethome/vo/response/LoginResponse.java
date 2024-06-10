@@ -1,16 +1,16 @@
 package org.tomjerry.sweethome.vo.response;
 
-import org.tomjerry.sweethome.pojo.entity.UserEntity;
-
 public class LoginResponse {
-    private UserEntity user;
+    private UserResponse user;
     private String token;
 
-    public UserEntity getUser() {
+    //Getter and Setter
+
+    public UserResponse getUser() {
         return user;
     }
 
-    public void setUser(UserEntity user) {
+    public void setUser(UserResponse user) {
         this.user = user;
     }
 

@@ -10,22 +10,17 @@ public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String content;
-
     @Column(name = "article_id")
     private Integer articleId;
-
     @Column(name = "user_id")
-    private String user_id;
-
+    private Integer userId;
     @Column(name = "create_time")
     private Timestamp createTime;
-
-    // Optional fields depending on your requirements
-    private Integer like_count; // If you want to track likes on comments
-    private Integer reply_count; // If you want to track replies to comments
-    private Integer status; // If you want to manage the status of comments (e.g., approved, pending, rejected)
+    private Integer like_count;
+    @Column(name = "parent_id")
+    private Integer parentId;
+    private Integer status;
 
 
     // 无参数的构造函数，供ORM框架使用
@@ -35,22 +30,44 @@ public class CommentEntity {
         // 可以初始化其他可选字段
     }
 
-    public CommentEntity(int id, int article_id, String user_id, String content, Timestamp create_time) {
+    public CommentEntity(int id, int articleId, int userId, String content, Timestamp createTime) {
         this.createTime = new Timestamp(System.currentTimeMillis());
         // Initialize other optional fields if needed
         // this.like_count = 0;
         // this.reply_count = 0;
         // this.status = 1; // Assuming 1 represents an approved status
         this.id=id;
-        this.articleId=article_id;
-        this.user_id=user_id;
+        this.articleId=articleId;
+        this.userId = userId;
         this.content=content;
         /*this.like_count=like_count;
         this.reply_count=reply_count;
 */
     }
 
-    // Getter and Setter for id
+    public CommentEntity(int articleId, int userId, String content) {
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.articleId=articleId;
+        this.userId = userId;
+        this.content=content;
+        this.like_count=0;
+        this.parentId=null;
+        this.status=1;
+    }
+
+    public CommentEntity(int articleId, int userId, String content, Integer parent_id) {
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.articleId=articleId;
+        this.userId = userId;
+        this.content=content;
+        this.like_count=0;
+        this.parentId=parent_id;
+        this.status=1;
+    }
+
+    //Getter and Setter
+
+
     public Integer getId() {
         return id;
     }
@@ -59,7 +76,6 @@ public class CommentEntity {
         this.id = id;
     }
 
-    // Getter and Setter for content
     public String getContent() {
         return content;
     }
@@ -68,33 +84,51 @@ public class CommentEntity {
         this.content = content;
     }
 
-    // Getter and Setter for articleId
-    public Integer getArticle_id() {
+    public Integer getArticleId() {
         return articleId;
     }
 
-    public void setArticleId(Integer article_id) {
-        this.articleId = article_id;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
-    // Getter and Setter for userId
-    public String getUsername() {
-        return user_id;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUsername(String user_id) {
-        this.user_id = user_id;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    // Getter and Setter for create_time
-    public Timestamp getCreate_time() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreate_time(Timestamp create_time) {
-        this.createTime = create_time;
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 
-    // Add getter and setter for optional fields if needed
-    // ...
+    public Integer getLike_count() {
+        return like_count;
+    }
+
+    public void setLike_count(Integer like_count) {
+        this.like_count = like_count;
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parent_id) {
+        this.parentId = parent_id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }
