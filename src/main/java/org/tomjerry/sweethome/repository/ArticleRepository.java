@@ -28,4 +28,10 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Integer>
             "a.title LIKE %:keyword% OR a.content LIKE %:keyword% " +
             "ORDER BY CASE WHEN a.title LIKE %:keyword% THEN 1 ELSE 2 END")
     Page<ArticleEntity> searchArticle(@Param("keyword") String keyword, Pageable pageable);
+
+
+    Page<ArticleEntity> findAllByOrderByUpdateTimeDesc(Pageable pageable);
+
+
+    Page<ArticleEntity> findAllByOrderByLikeCountDesc(Pageable pageable);
 }

@@ -13,4 +13,8 @@ public interface ArticleService {
     ArticleEntity getArticleById(int id);
 
     Page<ArticleEntity> getArticlesByUserId(int userId, int page, int size);
+
+    Page<ArticleEntity> getAllArticlesByTime(int page, int size);
+
+    Page<ArticleEntity> getAllArticlesByLikeCount(int page, int size);
 }

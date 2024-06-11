@@ -3,6 +3,7 @@ package org.tomjerry.sweethome.service.implement;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.tomjerry.sweethome.pojo.entity.ArticleEntity;
 import org.tomjerry.sweethome.pojo.entity.CommentEntity;
 import org.tomjerry.sweethome.repository.ArticleRepository;
 import org.tomjerry.sweethome.repository.CommentRepository;
@@ -51,6 +52,18 @@ public class CommentServiceImpl implements CommentService {
         }
 
         commentRepository.save(comment);
+
+        //update article comment count
+        articleRepository.findById(article_id).ifPresent(article -> {
+            article.setCommentCount(article.getCommentCount() + 1);
+            articleRepository.save(article);
+        });
+
+        //update user comment count
+        userRepository.findById(userId).ifPresent(user -> {
+            user.setComment_count(user.getComment_count() + 1);
+            userRepository.save(user);
+        });
 
         return comment;
     }
@@ -107,13 +120,28 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean deleteComment(Integer commentId) {
-        //check if comment exist
-        if (commentRepository.existsById(commentId)) {
-            commentRepository.deleteById(commentId);
-            return true;
-        }
-        else{
+
+        if (!commentRepository.existsById(commentId)) {
             throw new RuntimeException("Comment not found");
         }
+
+        CommentEntity comment = commentRepository.findById(commentId).orElse(null);
+        if (comment != null) {
+            //update article comment count
+            ArticleEntity article = articleRepository.findById(comment.getArticleId()).orElse(null);
+            if (article != null) {
+                article.setCommentCount(article.getCommentCount() - 1);
+                articleRepository.save(article);
+            }
+
+            //update user comment count
+            userRepository.findById(comment.getUserId()).ifPresent(user -> {
+                user.setComment_count(user.getComment_count() - 1);
+                userRepository.save(user);
+            });
+        }
+
+        commentRepository.deleteById(commentId);
+        return true;
     }
 }

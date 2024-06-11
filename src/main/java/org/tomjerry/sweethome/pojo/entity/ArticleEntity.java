@@ -17,19 +17,24 @@ public class ArticleEntity {
     @Column(name = "user_id")
     private Integer userid;
 
-    private Timestamp create_time;
-    private Timestamp update_time;
-    private Integer view_count;
-    private Integer like_count;
-    private Integer comment_count;
+    @Column(name = "create_time")
+    private Timestamp createTime;
+    @Column(name = "update_time")
+    private Timestamp updateTime;
+    @Column(name = "view_count")
+    private Integer viewCount;
+    @Column(name = "like_count")
+    private Integer likeCount;
+    @Column(name = "comment_count")
+    private Integer commentCount;
     private Integer status;
 
     public ArticleEntity() {
-        this.create_time = new Timestamp(System.currentTimeMillis());
-        this.update_time = new Timestamp(System.currentTimeMillis());
-        this.view_count = 0;
-        this.like_count = 0;
-        this.comment_count = 0;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.updateTime = new Timestamp(System.currentTimeMillis());
+        this.viewCount = 0;
+        this.likeCount = 0;
+        this.commentCount = 0;
         this.status = 1;
     }
 
@@ -67,44 +72,44 @@ public class ArticleEntity {
         this.userid = user_id;
     }
 
-    public Timestamp getCreate_time() {
-        return create_time;
+    public Timestamp getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(Timestamp create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(Timestamp create_time) {
+        this.createTime = create_time;
     }
 
-    public Timestamp getUpdate_time() {
-        return update_time;
+    public Timestamp getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdate_time(Timestamp update_time) {
-        this.update_time = update_time;
+    public void setUpdateTime(Timestamp update_time) {
+        this.updateTime = update_time;
     }
 
-    public Integer getView_count() {
-        return view_count;
+    public Integer getViewCount() {
+        return viewCount;
     }
 
-    public void setView_count(Integer view_count) {
-        this.view_count = view_count;
+    public void setViewCount(Integer view_count) {
+        this.viewCount = view_count;
     }
 
-    public Integer getLike_count() {
-        return like_count;
+    public Integer getLikeCount() {
+        return likeCount;
     }
 
-    public void setLike_count(Integer like_count) {
-        this.like_count = like_count;
+    public void setLikeCount(Integer like_count) {
+        this.likeCount = like_count;
     }
 
-    public Integer getComment_count() {
-        return comment_count;
+    public Integer getCommentCount() {
+        return commentCount;
     }
 
-    public void setComment_count(Integer comment_count) {
-        this.comment_count = comment_count;
+    public void setCommentCount(Integer comment_count) {
+        this.commentCount = comment_count;
     }
 
     public Integer getStatus() {

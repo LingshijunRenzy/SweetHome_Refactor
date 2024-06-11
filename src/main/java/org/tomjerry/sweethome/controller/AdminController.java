@@ -6,4 +6,10 @@ public interface AdminController {
 
 
     Result<String> login(String email, String password);
+
+
+    Result<String> refreshUserInfo();
+
+
+    Result<String> refreshArticleInfo();
 }

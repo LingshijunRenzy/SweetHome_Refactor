@@ -4,6 +4,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.tomjerry.sweethome.pojo.entity.FollowEntity;
+import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.repository.FollowRepository;
 import org.tomjerry.sweethome.repository.UserRepository;
 import org.tomjerry.sweethome.service.FollowService;
@@ -32,6 +33,15 @@ public class FollowServiceImpl implements FollowService {
             throw new IllegalArgumentException("User is already following");
         }
 
+        //update follow count
+        UserEntity follower = userRepository.findById(followerId).get();
+        follower.setFollow_count(follower.getFollow_count() + 1);
+        userRepository.save(follower);
+
+        UserEntity following = userRepository.findById(followingId).get();
+        following.setFans_count(following.getFans_count() + 1);
+        userRepository.save(following);
+
 
         FollowEntity follow = new FollowEntity(followerId, followingId);
         followRepository.save(follow);
@@ -43,6 +53,15 @@ public class FollowServiceImpl implements FollowService {
         if(!followRepository.existsByUserIdIdAndFollowUserId(user_id, follow_user_id)){
             throw new IllegalArgumentException("User is not following");
         }
+
+        //update follow count
+        UserEntity follower = userRepository.findById(user_id).get();
+        follower.setFollow_count(follower.getFollow_count() - 1);
+        userRepository.save(follower);
+
+        UserEntity following = userRepository.findById(follow_user_id).get();
+        following.setFans_count(following.getFans_count() - 1);
+        userRepository.save(following);
 
         followRepository.deleteByUserIdAndFollowUserId(user_id, follow_user_id);
     }

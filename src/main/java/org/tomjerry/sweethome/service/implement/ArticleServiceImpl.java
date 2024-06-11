@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import org.tomjerry.sweethome.pojo.entity.ArticleEntity;
+import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.repository.ArticleRepository;
 import org.tomjerry.sweethome.repository.UserRepository;
 import org.tomjerry.sweethome.service.ArticleService;
@@ -12,6 +13,7 @@ import org.tomjerry.sweethome.service.ArticleService;
 import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -45,6 +47,14 @@ public class ArticleServiceImpl implements ArticleService {
         article.setContent(content);
         article.setUserid(userId);
         articleRepository.save(article);
+
+        //update user article count
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.setArticle_count(user.getArticle_count() + 1);
+            userRepository.save(user);
+        }
+
         return article;
     }
 
@@ -69,7 +79,7 @@ public class ArticleServiceImpl implements ArticleService {
         });
 
         //设置更新时间
-        article.setUpdate_time(new Timestamp(System.currentTimeMillis()));
+        article.setUpdateTime(new Timestamp(System.currentTimeMillis()));
 
         articleRepository.save(article);
 
@@ -83,6 +93,15 @@ public class ArticleServiceImpl implements ArticleService {
 
         if (!articleRepository.existsById(id)) {
             throw new RuntimeException("Article not found");
+        }
+
+        Integer userId = Objects.requireNonNull(articleRepository.findById(id).orElse(null)).getUserid();
+
+        //update user article count
+        UserEntity user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            user.setArticle_count(user.getArticle_count() - 1);
+            userRepository.save(user);
         }
 
         articleRepository.deleteById(id);
@@ -109,5 +128,19 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return articleRepository.findByUserid(userId, PageRequest.of(page, size));
+    }
+
+
+
+    @Override
+    public Page<ArticleEntity> getAllArticlesByTime(int page, int size) {
+        return articleRepository.findAllByOrderByUpdateTimeDesc(PageRequest.of(page, size));
+    }
+
+
+
+    @Override
+    public Page<ArticleEntity> getAllArticlesByLikeCount(int page, int size) {
+        return articleRepository.findAllByOrderByLikeCountDesc(PageRequest.of(page, size));
     }
 }
