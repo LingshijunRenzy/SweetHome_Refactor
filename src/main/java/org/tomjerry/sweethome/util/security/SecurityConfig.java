@@ -6,25 +6,25 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.tomjerry.sweethome.repository.UserRepository;
 import org.tomjerry.sweethome.util.token.TokenService;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig{
+public class SecurityConfig {
 
     private final TokenService tokenService;
 
     public SecurityConfig(TokenService tokenService) {
         this.tokenService = tokenService;
     }
-
 
     /*
         * 配置安全过滤器链
@@ -36,6 +36,13 @@ public class SecurityConfig{
         http.csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session   // 设置session为无状态
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http.authorizeHttpRequests(authorizeRequests ->
+                authorizeRequests
+                        .requestMatchers("/admin/**").hasRole("ADMIN"))
+                .formLogin(formLogin ->
+                        formLogin.loginPage("/login").permitAll())
+                .logout(LogoutConfigurer::permitAll);
 
 
         http.authorizeHttpRequests(authorize -> authorize   // 配置请求的权限
@@ -68,13 +75,8 @@ public class SecurityConfig{
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager.createUser(org.springframework.security.core.userdetails.User.withUsername("user")
-                .password(passwordEncoder().encode("password"))
-                .authorities("ROLE_USER")
-                .build());
-        return manager;
+    public UserDetailsService userDetailsService(UserRepository userRepository){
+        return new CustomUserDetailService(userRepository);
     }
 
 }

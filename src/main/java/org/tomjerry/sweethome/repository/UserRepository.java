@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     UserEntity findByUsernameAndPassword(String username, String password);
     UserEntity findByEmailAndPassword(String email, String password);
     UserEntity findByPhoneAndPassword(String phone, String password);
+    UserEntity findByEmail(String email);
 
     @Query("SELECT u FROM UserEntity u WHERE " +
             "u.username LIKE %:keyword% " +
