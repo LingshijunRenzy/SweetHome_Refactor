@@ -5,8 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import org.tomjerry.sweethome.pojo.entity.ArticleEntity;
-import org.tomjerry.sweethome.pojo.entity.UserEntity;
 import org.tomjerry.sweethome.repository.ArticleRepository;
+import org.tomjerry.sweethome.repository.UserRepository;
 import org.tomjerry.sweethome.service.ArticleService;
 
 import java.lang.reflect.Field;
@@ -16,9 +16,11 @@ import java.util.Map;
 @Service
 public class ArticleServiceImpl implements ArticleService {
     private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
 
-    public ArticleServiceImpl(ArticleRepository articleRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, UserRepository userRepository) {
         this.articleRepository = articleRepository;
+        this.userRepository = userRepository;
     }
 
 
@@ -26,7 +28,7 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleEntity addArticle(String title, String content, int userId) {
 
         //check user
-        if (!articleRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             throw new RuntimeException("User not found");
         }
 
@@ -102,7 +104,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Page<ArticleEntity> getArticlesByUserId(int userId, int page, int size) {
         //check if user exist
-        if (!articleRepository.existsById(userId)) {
+        if (!userRepository.existsById(userId)) {
             throw new RuntimeException("User not found");
         }
 

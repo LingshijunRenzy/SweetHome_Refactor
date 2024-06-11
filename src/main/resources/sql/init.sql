@@ -79,3 +79,7 @@ CREATE TABLE IF NOT EXISTS follows(
 ALTER TABLE comments
 ADD COLUMN parent_id INT DEFAULT 0,
 ADD CONSTRAINT fk_parent_id FOREIGN KEY (parent_id) REFERENCES comments(id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- 为like表添加UNIQUE约束，防止重复点赞
+ALTER TABLE likes
+ADD CONSTRAINT unique_like UNIQUE (user_id, content_type, content_id);

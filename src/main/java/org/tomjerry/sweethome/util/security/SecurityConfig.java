@@ -50,6 +50,9 @@ public class SecurityConfig{
                 .requestMatchers(HttpMethod.POST, "/comment/add").authenticated()
                 .requestMatchers(HttpMethod.DELETE, "/comment/**").authenticated()
 
+                .requestMatchers(HttpMethod.POST, "/like").authenticated()
+                .requestMatchers(HttpMethod.POST, "/follow").authenticated()
+
                 .anyRequest().permitAll());                         // 其他请求放行
 
 

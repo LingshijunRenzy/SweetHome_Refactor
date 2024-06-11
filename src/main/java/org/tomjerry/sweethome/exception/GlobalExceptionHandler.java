@@ -15,4 +15,12 @@ public class GlobalExceptionHandler {
     public Result<String> handleRuntimeException(RuntimeException e) {
         return new Result<>(400, e.getMessage(), null);
     }
+
+
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result<String> handleIllegalArgumentException(IllegalArgumentException e) {
+        return new Result<>(400, e.getMessage(), null);
+    }
 }

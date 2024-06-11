@@ -1,45 +1,40 @@
 package org.tomjerry.sweethome.controller.implement;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.tomjerry.sweethome.pojo.entity.FollowEntity;
+import org.tomjerry.sweethome.controller.FollowController;
 import org.tomjerry.sweethome.service.FollowService;
+import org.tomjerry.sweethome.vo.request.FollowRequest;
 import org.tomjerry.sweethome.vo.response.Result;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/follow")
-public class FollowControllerImpl {
+public class FollowControllerImpl implements FollowController {
 
     private final FollowService followService;
 
-    @Autowired
     public FollowControllerImpl(FollowService followService) {
         this.followService = followService;
     }
 
-    @PostMapping("/follow")
-    public Result <FollowEntity>followUser(@RequestParam Integer followingId, Principal principal) {
-        if (principal == null) {
-            return new Result<>(401, "User not authenticated", null);
+    @Override
+    @PostMapping
+    public Result<String> handleFollowRequest(
+            @RequestAttribute Integer userId,
+            @RequestBody FollowRequest followRequest) {
+
+        String action = followRequest.getAction();
+        Integer followUserId = followRequest.getFollowingId();
+
+        if("follow".equals(action)){
+            followService.followUser(userId, followUserId);
+            return new Result<>(200, "Follow success", null);
+        }else if("unfollow".equals(action)){
+            followService.unfollowUser(userId, followUserId);
+            return new Result<>(200, "Unfollow success", null);
+        }else {
+            throw new IllegalArgumentException("Invalid action");
         }
 
-        int followerId = Integer.parseInt(principal.getName());
-
-        followService.followUser(followerId, followingId);
-        return new Result<>(200, "Followed user successfully", null);
-    }
-
-    @PostMapping("/unfollow")
-    public Result<FollowEntity> unfollowUser(@RequestParam Integer followingId, Principal principal) {
-        if (principal == null) {
-            return new Result<>(401, "User not authenticated", null);
-        }
-
-        int followerId = Integer.parseInt(principal.getName());
-
-        followService.unfollowUser(followerId, followingId);
-        return new Result<>(200, "Unfollowed user successfully", null);
     }
 }

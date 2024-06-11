@@ -10,19 +10,24 @@ public class FollowEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int user_id; // 关注者的用户ID
-    private int follow_user_id; // 被关注者的用户ID
+    @Column(name = "user_id")
+    private int userId; // 关注者的用户ID
+    @Column(name = "follow_user_id")
+    private int followUserId; // 被关注者的用户ID
+
     @Column(name = "create_time")
     private Timestamp createTime;
+
+
     // 无参构造函数，JPA 最佳实践
     public FollowEntity() {
         this.createTime = new Timestamp(System.currentTimeMillis());
     }
 
-    // 构造函数、Getter 和 Setter 方法
-    public FollowEntity(int user_id, int follow_user_id) {
-        this.user_id = user_id;
-        this.follow_user_id = follow_user_id;
+    public FollowEntity(int userId, int followUserId) {
+        this.userId = userId;
+        this.followUserId = followUserId;
+        this.createTime = new Timestamp(System.currentTimeMillis());
     }
 
     public int getId() {
@@ -33,21 +38,27 @@ public class FollowEntity {
         this.id = id;
     }
 
-    // 更新方法名以匹配字段名
-    public int getUser_id() {
-        return user_id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    // 更新方法名以匹配字段名
-    public int getFollow_user_id() {
-        return follow_user_id;
+    public int getFollowUserId() {
+        return followUserId;
     }
 
-    public void setFollow_user_id(int follow_user_id) {
-        this.follow_user_id = follow_user_id;
+    public void setFollowUserId(int followUserId) {
+        this.followUserId = followUserId;
+    }
+
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
     }
 }
