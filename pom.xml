@@ -10,7 +10,7 @@
     </parent>
     <groupId>org.TomJerry</groupId>
     <artifactId>SweetHome</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>SweetHome</name>
     <description>SweetHome</description>
     <properties>
