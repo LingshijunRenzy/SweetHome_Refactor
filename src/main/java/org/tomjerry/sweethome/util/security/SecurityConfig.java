@@ -21,9 +21,11 @@ import org.tomjerry.sweethome.util.token.TokenService;
 public class SecurityConfig {
 
     private final TokenService tokenService;
+    private final CustomUserDetailService customUserDetailService;
 
-    public SecurityConfig(TokenService tokenService) {
+    public SecurityConfig(TokenService tokenService, CustomUserDetailService customUserDetailService) {
         this.tokenService = tokenService;
+        this.customUserDetailService = customUserDetailService;
     }
 
     /*
@@ -39,10 +41,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(authorizeRequests ->
                 authorizeRequests
-                        .requestMatchers("/admin/**").hasRole("ADMIN"))
-                .formLogin(formLogin ->
-                        formLogin.loginPage("/login").permitAll())
-                .logout(LogoutConfigurer::permitAll);
+                        .requestMatchers("/admin/**").hasRole("ADMIN"));
 
 
         http.authorizeHttpRequests(authorize -> authorize   // 配置请求的权限
@@ -64,7 +63,7 @@ public class SecurityConfig {
 
 
         // 添加JWT认证过滤器
-        http.addFilterBefore(new JwtAuthenticationFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(tokenService, customUserDetailService), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -77,6 +76,11 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository){
         return new CustomUserDetailService(userRepository);
+    }
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter(){
+        return new JwtAuthenticationFilter(tokenService, customUserDetailService);
     }
 
 }

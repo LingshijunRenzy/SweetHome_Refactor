@@ -36,7 +36,7 @@ public class UserResponse {
         this.liked_count = userEntity.getLiked_count();
         this.follow_count = userEntity.getFollow_count();
         this.fans_count = userEntity.getFans_count();
-        this.is_admin = userEntity.getIs_admin();
+        this.is_admin = userEntity.getIsAdmin();
         this.status = userEntity.getStatus();
     }
 

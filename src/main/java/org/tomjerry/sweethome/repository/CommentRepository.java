@@ -23,4 +23,10 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
 
 
     Page<CommentEntity> findByParentIdOrderByCreateTimeDesc(Integer parentId, Pageable pageable);
+
+
+    int countByUserId(Integer articleId);
+
+
+    int countByArticleId(Integer articleId);
 }

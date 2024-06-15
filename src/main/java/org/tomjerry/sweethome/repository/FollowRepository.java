@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.tomjerry.sweethome.pojo.entity.FollowEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.tomjerry.sweethome.pojo.entity.LikeEntity;
 
 @Repository
 public interface FollowRepository extends JpaRepository<FollowEntity, Integer> {
@@ -29,4 +28,10 @@ public interface FollowRepository extends JpaRepository<FollowEntity, Integer> {
 
     @Transactional
     void deleteByUserIdAndFollowUserId(int userId, int followUserId);
+
+
+    int countByUserId(int userId);
+
+
+    int countByFollowUserId(int followUserId);
 }

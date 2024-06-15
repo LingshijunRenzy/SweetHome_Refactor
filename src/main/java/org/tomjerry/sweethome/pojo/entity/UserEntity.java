@@ -24,7 +24,8 @@ public class UserEntity {
     private Integer liked_count;
     private Integer follow_count;
     private Integer fans_count;
-    private Integer is_admin;
+    @Column(name = "is_admin")
+    private Integer isAdmin;
     private Integer status;
 
     public UserEntity() {
@@ -37,7 +38,7 @@ public class UserEntity {
         this.liked_count = 0;
         this.follow_count = 0;
         this.fans_count = 0;
-        this.is_admin = 0;
+        this.isAdmin = 0;
         this.status = 1;
     }
 
@@ -155,12 +156,12 @@ public class UserEntity {
         this.fans_count = fans_count;
     }
 
-    public Integer getIs_admin() {
-        return is_admin;
+    public Integer getIsAdmin() {
+        return isAdmin;
     }
 
-    public void setIs_admin(Integer is_admin) {
-        this.is_admin = is_admin;
+    public void setIsAdmin(Integer is_admin) {
+        this.isAdmin = is_admin;
     }
 
     public Integer getStatus() {

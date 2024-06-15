@@ -68,3 +68,22 @@ Content-Type: application/json
 
 ### search article
 GET http://localhost:8080/search?keyword=test
+
+### admin test(admin)
+POST http://localhost:8080/admin/test
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE4OTQ4Njg2fQ.q3iPYV5ms1INWC_y0NMRgeIoG2jtIdse-lA4jeYEjilj1MflnfzjWprzZBp4zXJzop73hMU76sBVBcsdeNGoug
+
+### admin test(user)
+POST http://localhost:8080/admin/test
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyIiwiZXhwIjoxNzE4OTQ5Njk0fQ.V2GuWL-NlTjASDQoamuk3Cfnygh5lGRSrVMKfyQyDiZ_sIBRjrUztvWgeVqa_RjS62DW7ySHLZvogFH7zwa-pg
+
+### admin test(no token)
+POST http://localhost:8080/admin/test
+
+### admin refresh user
+POST http://localhost:8080/admin/refresh/user
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE4OTQ4Njg2fQ.q3iPYV5ms1INWC_y0NMRgeIoG2jtIdse-lA4jeYEjilj1MflnfzjWprzZBp4zXJzop73hMU76sBVBcsdeNGoug
+
+### admin refresh article
+POST http://localhost:8080/admin/refresh/article
+Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxIiwiZXhwIjoxNzE4OTQ4Njg2fQ.q3iPYV5ms1INWC_y0NMRgeIoG2jtIdse-lA4jeYEjilj1MflnfzjWprzZBp4zXJzop73hMU76sBVBcsdeNGoug

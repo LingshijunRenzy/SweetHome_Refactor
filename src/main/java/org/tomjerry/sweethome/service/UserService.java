@@ -18,4 +18,6 @@ public interface UserService {
 
     LoginResponse login(String loginContext, String password);
     LoginResponse register(String username, String email, String phone, String password);
+
+    boolean refreshUserInfo();
 }

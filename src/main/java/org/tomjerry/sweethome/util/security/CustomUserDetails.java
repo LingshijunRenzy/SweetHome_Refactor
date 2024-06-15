@@ -7,7 +7,6 @@ import org.tomjerry.sweethome.pojo.entity.UserEntity;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class CustomUserDetails implements UserDetails {
 
@@ -25,7 +24,7 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        String role = userEntity.getIs_admin() == 1 ? "ROLE_ADMIN" : "ROLE_USER";
+        String role = userEntity.getIsAdmin() == 1 ? "ROLE_ADMIN" : "ROLE_USER";
 
         return Collections.singletonList(new SimpleGrantedAuthority(role));
     }

@@ -20,4 +20,10 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Integer>{
 
 
     Page<LikeEntity> findByContentTypeAndContentId(Integer contentType, Integer contentId, Pageable pageable);
+
+
+    int countByUserId(Integer userId);
+
+
+    int countByContentTypeAndContentId(Integer contentType, Integer contentId);
 }

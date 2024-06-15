@@ -1,9 +1,8 @@
 package org.tomjerry.sweethome.controller.implement;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.tomjerry.sweethome.controller.AdminController;
+import org.tomjerry.sweethome.service.ArticleService;
 import org.tomjerry.sweethome.service.UserService;
 import org.tomjerry.sweethome.vo.response.Result;
 
@@ -12,14 +11,11 @@ import org.tomjerry.sweethome.vo.response.Result;
 public class AdminControllerImpl implements AdminController {
 
     private final UserService userService;
+    private final ArticleService articleService;
 
-    public AdminControllerImpl(UserService userService) {
+    public AdminControllerImpl(UserService userService, ArticleService articleService) {
         this.userService = userService;
-    }
-
-    @Override
-    public Result<String> login(String email, String password) {
-        return null;
+        this.articleService = articleService;
     }
 
 
@@ -27,7 +23,8 @@ public class AdminControllerImpl implements AdminController {
     @Override
     @PostMapping("/refresh/user")
     public Result<String> refreshUserInfo() {
-        return null;
+        userService.refreshUserInfo();
+        return new Result<>(200, "OK", "user info refresh success");
     }
 
 
@@ -35,6 +32,15 @@ public class AdminControllerImpl implements AdminController {
     @Override
     @PostMapping("/refresh/article")
     public Result<String> refreshArticleInfo() {
-        return null;
+        articleService.refreshArticleInfo();
+        return new Result<>(200, "OK", "article info refresh success");
+    }
+
+
+
+    @Override
+    @PostMapping("/test")
+    public Result<String> testAdminConnection(@RequestAttribute Integer userId) {
+        return new Result<>(200, "OK", "admin connection success, userID = " + userId.toString());
     }
 }

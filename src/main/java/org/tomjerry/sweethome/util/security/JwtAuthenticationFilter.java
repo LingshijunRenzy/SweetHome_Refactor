@@ -1,11 +1,17 @@
 package org.tomjerry.sweethome.util.security;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.tomjerry.sweethome.util.token.TokenService;
 
@@ -17,9 +23,11 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private TokenService tokenService;
+    private CustomUserDetailService customUserDetailService;
 
-    public JwtAuthenticationFilter(TokenService tokenService) {
+    public JwtAuthenticationFilter(TokenService tokenService, CustomUserDetailService customUserDetailService) {
         this.tokenService = tokenService;
+        this.customUserDetailService = customUserDetailService;
     }
 
     @Override
@@ -30,10 +38,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = getJwtFromRequest(request);
         if(token != null && tokenService.validateToken(token)) {
-            Integer userId = tokenService.getUserIdFromToken(token);
+            // 解析token
+            Claims claims = tokenService.getClaimsFromToken(token);
+
+            // 获取用户id
+            String userId = claims.getSubject();
             request.setAttribute("userId", userId);
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userId, null, null);
+            UserDetails userDetails = customUserDetailService.loadUserByUsername(userId);
+
+                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    userDetails, null, userDetails.getAuthorities());
+
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
         }

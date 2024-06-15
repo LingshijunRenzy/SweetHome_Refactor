@@ -3,7 +3,7 @@ package org.tomjerry.sweethome.service.implement;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import org.tomjerry.sweethome.pojo.entity.UserEntity;
-import org.tomjerry.sweethome.repository.UserRepository;
+import org.tomjerry.sweethome.repository.*;
 import org.tomjerry.sweethome.vo.response.LoginResponse;
 import org.tomjerry.sweethome.service.UserService;
 import org.tomjerry.sweethome.util.token.TokenService;
@@ -16,13 +16,28 @@ import java.util.Map;
 @Service
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
+    private final ArticleRepository articleRepository;
+    private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
+    private final FollowRepository followRepository;
     private final TokenService tokenService;
 
 
 
-    public UserServiceImpl(UserRepository userRepository, TokenService tokenService) {
+    public UserServiceImpl(
+            UserRepository userRepository,
+            TokenService tokenService,
+            ArticleRepository articleRepository,
+            CommentRepository commentRepository,
+            LikeRepository likeRepository,
+            FollowRepository followRepository) {
+
         this.userRepository = userRepository;
         this.tokenService = tokenService;
+        this.articleRepository = articleRepository;
+        this.commentRepository = commentRepository;
+        this.likeRepository = likeRepository;
+        this.followRepository = followRepository;
     }
 
 
@@ -174,5 +189,33 @@ public class UserServiceImpl implements UserService{
         loginResponse.setUser(new UserResponse(user));
         loginResponse.setToken(tokenService.generateToken(user.getId()));
         return loginResponse;
+    }
+
+
+
+    @Override
+    public boolean refreshUserInfo() {
+        userRepository.findAll().forEach(user -> {
+            //Recalculate user article count
+            user.setArticle_count(articleRepository.countByUserid(user.getId()));
+
+            //Recalculate user comment count
+            user.setComment_count(commentRepository.countByUserId(user.getId()));
+
+            //Recalculate user like count
+            user.setLiked_count(likeRepository.countByUserId(user.getId()));
+
+            //Recalculate user follow count
+            user.setFollow_count(followRepository.countByUserId(user.getId()));
+
+            //Recalculate user fans count
+            user.setFans_count(followRepository.countByFollowUserId(user.getId()));
+
+            userRepository.save(user);
+
+            //控制台日志
+            System.out.println("User " + user.getId() + " info refreshed");
+        });
+        return true;
     }
 }

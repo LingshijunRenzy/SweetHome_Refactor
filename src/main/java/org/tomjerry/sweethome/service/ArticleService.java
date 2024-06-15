@@ -17,4 +17,7 @@ public interface ArticleService {
     Page<ArticleEntity> getAllArticlesByTime(int page, int size);
 
     Page<ArticleEntity> getAllArticlesByLikeCount(int page, int size);
+
+
+    boolean refreshArticleInfo();
 }

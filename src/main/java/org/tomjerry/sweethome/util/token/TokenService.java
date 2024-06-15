@@ -5,11 +5,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
+import org.tomjerry.sweethome.repository.UserRepository;
 
+import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
-import java.security.MessageDigest;
-import java.util.Base64;
-import java.util.Random;
+import java.util.Date;
 
 /*
     * 这个类用于生成一个随机的令牌
@@ -37,9 +37,10 @@ public class TokenService {
      */
     public String generateToken(Integer userId){
         try{
+
             String token = Jwts.builder()
                     .setSubject(userId.toString())
-                    .setExpiration(new java.util.Date(System.currentTimeMillis() + EXPIRE_TIME))
+                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_TIME))
                     .signWith(SignatureAlgorithm.HS512, key)
                     .compact();
             return token;
@@ -82,5 +83,22 @@ public class TokenService {
             e.printStackTrace();
         }
         return false;
+    }
+
+
+
+    public static Key getSigningKey(){
+        byte[] keyBytes = SECRET_KEY.getBytes();
+        return new SecretKeySpec(keyBytes, SignatureAlgorithm.HS512.getJcaName());
+    }
+
+
+
+    public Claims getClaimsFromToken(String token) {
+        return Jwts.parser()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

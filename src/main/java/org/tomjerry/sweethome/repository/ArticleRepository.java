@@ -34,4 +34,7 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Integer>
 
 
     Page<ArticleEntity> findAllByOrderByLikeCountDesc(Pageable pageable);
+
+
+    int countByUserid(Integer userId);
 }
