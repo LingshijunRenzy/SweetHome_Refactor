@@ -3,6 +3,7 @@ package org.tomjerry.sweethome.controller.implement;
 import org.springframework.web.bind.annotation.*;
 import org.tomjerry.sweethome.controller.FollowController;
 import org.tomjerry.sweethome.service.FollowService;
+import org.tomjerry.sweethome.vo.request.FollowCheckRequest;
 import org.tomjerry.sweethome.vo.request.FollowRequest;
 import org.tomjerry.sweethome.vo.response.Result;
 
@@ -36,5 +37,18 @@ public class FollowControllerImpl implements FollowController {
             throw new IllegalArgumentException("Invalid action");
         }
 
+    }
+
+
+
+    @Override
+    @PostMapping("/check")
+    public Result<Boolean> isUserFollowing(@RequestBody FollowCheckRequest followCheckRequest) {
+        Integer userId = followCheckRequest.getUserId();
+        Integer followUserId = followCheckRequest.getFollowUserId();
+
+        boolean isFollowing = followService.isUserFollowing(userId, followUserId);
+
+        return new Result<>(200, "success", isFollowing);
     }
 }

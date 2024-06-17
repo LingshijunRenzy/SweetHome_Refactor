@@ -100,8 +100,12 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public boolean isUserFollowing(int user_id, int follow_user_id) {
-        // 调用 FollowRepository 中的合适方法来检查是否存在关注关系
-        // 假设方法名为 existsByFollowerIdAndFollowingId
+        //check if the user exists
+        if(!userRepository.existsById(user_id) || !userRepository.existsById(follow_user_id)){
+            throw new IllegalArgumentException("User does not exist");
+        }
+
+
         return followRepository.existsByUserIdIdAndFollowUserId(user_id, follow_user_id);
     }
 
