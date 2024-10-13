@@ -1,15 +1,15 @@
 package org.tomjerry.sweethome.vo.request;
 
 public class LoginRequest {
-    private String loginContext;
+    private String loginContent;
     private String password;
 
-    public String getLoginContext() {
-        return loginContext;
+    public String getLoginContent() {
+        return loginContent;
     }
 
-    public void setLoginContext(String loginContext) {
-        this.loginContext = loginContext;
+    public void setLoginContent(String loginContent) {
+        this.loginContent = loginContent;
     }
 
     public String getPassword() {

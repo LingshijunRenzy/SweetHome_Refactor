@@ -32,6 +32,6 @@ VALUES
 百草园中鸟自啼，三味书屋人自愉。',
  2, 50, 30, 10, 1);
 
-INSERT INTO comments (content, user_id,article_id, like_count, reply_count, status)
+INSERT INTO comments (content, user_id,article_id, like_count, status)
 VALUES
-('这是一条评论', 123,123, 0, 0,1);
+('这是一条评论', 123,123, 0,1);

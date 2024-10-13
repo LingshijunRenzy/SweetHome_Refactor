@@ -12,7 +12,7 @@ import org.tomjerry.sweethome.service.UserService;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserControllerImpl implements UserController{
 
     private final UserService userService;
@@ -28,7 +28,7 @@ public class UserControllerImpl implements UserController{
     public Result<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
 
         LoginResponse loginResponse = userService.login(
-                loginRequest.getLoginContext(),
+                loginRequest.getLoginContent(),
                 loginRequest.getPassword());
 
         return new Result<>(200, "Login success", loginResponse);
